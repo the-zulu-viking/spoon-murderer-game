@@ -37,6 +37,14 @@ def target():
     
     return render_template("target.html", bud= players_list)
 
+@app.route("/players" ,methods=["GET", "POST"])
+def players():
+    if request.method == 'POST':
+        answer =  request.form
+        print(answer)
+    return render_template("players.html")
+
+
 @app.route("/thanks" )
 def thanks(target):
     

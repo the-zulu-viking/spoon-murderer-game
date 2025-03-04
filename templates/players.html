@@ -8,18 +8,12 @@
 
 <form method="post">
 
-
 <div class="mb-3">
-    <label class="form-label">Select your name: </label>
 
-    <select class="form-select form-select-lg mb-3" name="member" required>
-
-      <option selected value= "" class="">&mdash; &mdash; &mdash;</option>
-      {% for bud in bud %}
-      <option value="{{bud}}">
-        {{bud}} </option>
-      {% endfor %}
-    </select>
+    <label for="customRange3" class="form-label">
+      How many players: <span id="rangeValue"> 25 </span> 
+    </label>
+    <input type="range" class="form-range" min="0" max="50" step="1" id="customRange3" name="no_players" value="25" oninput="updateRangeValue(this.value)">
 </div>
 
 <div class="col-12">
@@ -27,5 +21,19 @@
 </div>
 
 </form>
+
+<script>
+    // Select the slider and the span element
+    const rangeInput = document.getElementById("customRange3");
+    const rangeValue = document.getElementById("rangeValue");
+
+    // Function to update the displayed value
+    function updateRangeValue() {
+        rangeValue.textContent = rangeInput.value;
+    }
+
+    // Listen for input changes on the slider
+    rangeInput.addEventListener("input", updateRangeValue);
+</script>
 
 {%endblock%}
