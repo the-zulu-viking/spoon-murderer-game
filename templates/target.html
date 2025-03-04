@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+    target Page
+{% endblock %}
+
+{% block main %}
+
+<form method="post">
+
+
+<div class="mb-3">
+    <label class="form-label">Select your name: </label>
+
+    <select class="form-select form-select-lg mb-3" name="member">
+
+      <option selected value="" class="">&mdash; &mdash; &mdash;</option>
+      {% for bud in bud %}
+      <option value="{{bud}}">
+        {{bud}} </option>
+      {% endfor %}
+    </select>
+</div>
+
+<div class="col-12">
+<button class="btn btn-primary mt-3" type="submit">Submit</button>
+</div>
+
+</form>
+
+{%endblock%}

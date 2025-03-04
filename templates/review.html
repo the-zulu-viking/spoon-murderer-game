@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}
+Results {%if course_id %}for course {{course_id}} {%endif%}
+{% endblock %}
+
+{% block header_text %}
+Results {%if c_title %} for {{c_title}} {%endif%}
+{% endblock %}
+
+{% block main %}
+
+{% if errors %}
+<div class="alert alert-danger p-auto" role="alert">
+
+  <ul class="list-group">
+    {%for error in errors%}
+    <li > {{error}}</li>
+    {%endfor%}
+  </ul>
+</div>
+{%endif%}
+
+{%if thanks %}
+<h4>Thanks for your response. </h3>
+  <p>See a sumarry of everyone's response below</p>
+  {%endif%}
+
+  <form method="post">
+    <label class="form-label">Select Course:</label>
+    <select class="form-select form-select-lg mb-3" name="course">
+
+      <option selected value="" class="">&mdash; &mdash; &mdash;</option>
+      {% for course in courses %}
+      <option value="{{course['course_id']}}" {% if course_id==course.course_id %} selected {%endif%}>
+        {{course.course_id}} {{course.course_title}} </option>
+      {% endfor %}
+    </select>
+ 
+  <div class=" my-3">
+    <button class="btn btn-secondary" type="submit">select</button>
+  </div>
+ </form>
+  {%if plot_svg %}
+  <hr class="border border-secondary border-3 opacity-75">
+  <div class="col-6 text-center">
+    {{ plot_svg|safe }}
+  </div>
+
+  <h4>Questions:</h4>
+  {%for question in questions%}
+  <h5>{{question.question_id}}. {{question.question_title}} </h5>
+  <table class="table mx-3 my-3 table-hover table-bordered border-black ">
+    <thead>
+      <tr class="table-primary">
+        <th scope="col"> Option</th>
+        <th scope="col"> Number of responses:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Strongly Disagree</td>
+        <td>{{response_1[''~question.question_id]}}</td>
+      </tr>
+      <tr>
+        <td>Disagree</td>
+        <td>{{response_2[''~question.question_id]}}</td>
+      </tr>
+      <tr>
+        <td>Neutral</td>
+        <td>{{response_3[''~question.question_id]}}</td>
+      </tr>
+      <tr>
+        <td>Agree</td>
+        <td>{{response_4[''~question.question_id]}}</td>
+      </tr>
+      <tr>
+        <td>Strongly Agree</td>
+        <td>{{response_5[''~question.question_id]}}</td>
+      </tr>
+      <tr>
+        <td>Total responses (excluding "Don't know)"</td>
+        <td>{{t_responses[''~question.question_id]}}</td>
+      </tr>
+      <tr>
+        <td>I don't Know</td>
+        <td>{{response_null[''~question.question_id]}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  {%endfor%}
+
+  {%endif%}
+
+
+  {% endblock %}
