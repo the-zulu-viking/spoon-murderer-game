@@ -6,12 +6,12 @@ import datetime as dt
 app = Flask(__name__)
 
 ts = dt.datetime.now()
-buddies_list = ['Fenne', 'Henrik', 'Ingeborg', 'Lina', 'Mai', 'Malte', 'Maria', 'Pablo', 'Sven', 'Thijs', 'Tilly']
+players_list = ['Fenne', 'Henrik', 'Ingeborg', 'Lina', 'Mai', 'Malte', 'Maria', 'Pablo', 'Sven', 'Thijs', 'Tilly']
 
-buddies = ['Fenne', 'Henrik', 'Ingeborg', 'Lina', 'Mai', 'Malte', 'Maria', 'Pablo', 'Sven', 'Thijs', 'Tilly']
-rd.shuffle(buddies)
+shuffled_list = players_list.copy()
+rd.shuffle(shuffled_list)
 print(ts)
-print("This is the order" , buddies)
+print("This is the order" , shuffled_list)
 
 
 @app.route("/")
@@ -26,16 +26,16 @@ def target():
     if request.method == 'POST':
         answer =  request.form
         member = answer.get('member')
-        i= buddies.index(member)
+        i = shuffled_list.index(member)
 
-        if i <10:
-            return render_template("thanks.html", target=buddies[i+1] )
-        elif i ==10:
-            return render_template("thanks.html", target=buddies[0] )
+        if i <(len(players_list)-1):
+            return render_template("thanks.html", target=shuffled_list[i+1] )
+        elif i ==(len(players_list)-1):
+            return render_template("thanks.html", target=shuffled_list[0] )
         else:
             abort
     
-    return render_template("target.html",bud= buddies_list)
+    return render_template("target.html", bud= players_list)
 
 @app.route("/thanks" )
 def thanks(target):
